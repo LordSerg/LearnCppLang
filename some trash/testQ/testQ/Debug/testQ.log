@@ -1,0 +1,3 @@
+﻿  testQ.cpp
+D:\Languiges_C++\testQ\testQ\testQ.cpp(9,13): warning C4309: 'initializing': truncation of constant value
+  testQ.vcxproj -> D:\Languiges_C++\testQ\Debug\testQ.exe

@@ -15,7 +15,7 @@ void search(int k, int n)
     }
     else
     {
-        subset.push_back(k);
+        subset.push_back((k-1));
         search(k+1, n);
         subset.pop_back();
         search(k+1, n);

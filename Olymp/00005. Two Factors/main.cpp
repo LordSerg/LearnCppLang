@@ -39,13 +39,13 @@ int numOfFactors(long long n)
 
 //generated prime numbers up to 100
 int primes[]{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
-void printVector(const std::vector<int>::iterator &from, const std::vector<int>::iterator &to)
+void printVector(std::vector<int> v)
 {
-    for(auto it{from};it!=to;++it)
+    for(auto it{v.begin()};it!=v.end();++it)
         std::cout<<*it<<" ";
     //std::cout<<std::endl;
 }
-long long evaluate(std::vector<int> &p)
+long long evaluate(const std::vector<int> p)
 {//assume, that p is already sorted max to min
     long long result{1};
     //for(auto it{p.begin};it!=p.end();++it)
@@ -55,8 +55,95 @@ long long evaluate(std::vector<int> &p)
     }
     return result;
 }
+std::vector<int> subset;
+std::vector<int> TMP_DO_NOT_CHANGE;
+std::map<std::vector<int>,int> factorsCombinations{};
+void search(int k, int n)
+{
+    if(k == n+1)
+    {
+        if(subset.size()>1)
+        {
+            int res=1;
+            std::vector<int> tmp(TMP_DO_NOT_CHANGE);
+            for(auto i : subset)
+                res*=tmp[i];
+            for(int i=subset.size()-1;i>=0;--i)
+            {
+                tmp.erase(tmp.begin()+subset[i]);
+            }
+            tmp.push_back(res);
+            //tmp.insert(tmp.begin(),res);
+            sort(tmp.begin(),tmp.end(),std::greater<int>());
+            factorsCombinations[tmp]++;
+        }
+    }
+    else
+    {
+        subset.push_back((k-1));
+        search(k+1, n);
+        subset.pop_back();
+        search(k+1, n);
+    }
+}
 int main()
 {
+    //std::map<int,int> factors{};
+    
+    //printVector(primes.begin(),primes.end());
+    std::vector<int> f{};
+    std::cout<<"k -> list -> evaluation"<<std::endl;
+    long long min{LLONG_MAX};
+    for(int k{1};k<=100;++k)
+    {
+        //factors.clear();
+        factorsCombinations.clear();
+        f.clear();
+        int tmp = k;
+        //long long min{static_cast<long long>(pow(2,(k/2)-1))};
+        for(int j{2};tmp>1;)
+        {
+            if(tmp%j==0)
+            {
+                //factors[j]++;
+                f.push_back(j);
+                tmp/=j;
+            }
+            else
+                ++j;
+        }
+        if(f.size()==0)
+            f.push_back(1);
+        //printVector(f.begin(),f.end());
+
+        sort(f.begin(),f.end(),std::greater<int>());//sort max to min
+
+        TMP_DO_NOT_CHANGE=f;
+        
+        search(1,TMP_DO_NOT_CHANGE.size());
+
+        std::cout<<(k+1)/2<<" \t-> ";
+        printVector(f);
+        std::cout<<" -> "<<evaluate(f)<<std::endl;
+
+        if(k%2==1)
+            min = evaluate(f)>0?evaluate(f):LLONG_MAX;
+        else
+            min = evaluate(f)<min?(evaluate(f)>0?evaluate(f):min):min;
+        for(const auto &it : factorsCombinations)
+        {
+            long long abeba{evaluate(it.first)};
+            std::cout<<" \t-> ";
+            printVector(it.first);
+            
+            std::cout<<" -> "<<abeba<<std::endl;
+            if(abeba>0&&abeba<min)
+                min = abeba;
+        }
+        if(k%2==0)
+            std::cout<<"ANSWER = "<<min<<std::endl;
+    }
+
 #if 0
     //std::vector<long long> a{1,4,12, 24, 48, 60, 192, 120, 180, 240, 3072, 360, 12288, 900, 720, 840, 196608, 1260, 786432, 1680, 2880, 15360, 12582912, 2520, 6480, 61440, 6300, 6720, 805306368, 5040, 3221225472, 7560, 446080, 983040, 25920, 10080, 206158430208, 32400, 184320, 15120, 3298534883328, 20160, 13194139533312, 107520, 25200, 2985984, 211106232532992, 27720, 233280, 45360};//{1,4,12,24,48,60,192,120,180,240,3072,360,12288,960,720,840,196608,1260,786432};
     std::vector<long long> a{1,4};//,12, 24, 48, 60, 192, 120, 180, 240, 3072, 360, 12288, 900, 720, 840, 196608, 1260, 786432, 1680, 2880, 15360, 12582912, 2520, 6480, 61440, 6300, 6720, 805306368, 5040, 3221225472, 7560, 446080, 983040, 25920, 10080, 206158430208, 32400, 184320, 15120, 3298534883328, 20160, 13194139533312, 107520, 25200, 2985984, 211106232532992, 27720, 233280, 45360};//{1,4,12,24,48,60,192,120,180,240,3072,360,12288,960,720,840,196608,1260,786432};
@@ -175,36 +262,7 @@ int main()
         std::cout<<std::endl;
     }
 #endif
-    //std::map<int,int> factors{};
-    std::map<std::vector<int>,int> factorsCombinations{};
-    //printVector(primes.begin(),primes.end());
-    std::vector<int> f{};
-    std::cout<<"k -> list -> evaluation"<<std::endl;
-    for(int k{1};k<=100;++k)
-    {
-        //factors.clear();
-        factorsCombinations.clear();
-        f.clear();
-        f.push_back(1);//every number is devidable by one)
-        int tmp = k;
-        long long min{static_cast<long long>(pow(2,(k/2)-1))};
-        for(int j{2};tmp>1;)
-        {
-            if(tmp%j==0)
-            {
-                //factors[j]++;
-                f.push_back(j);
-                tmp/=j;
-            }
-            else
-                ++j;
-        }
-        //printVector(f.begin(),f.end());
 
-        sort(f.begin(),f.end(),std::greater<int>());//sort max to min
-        std::cout<<(k+1)/2<<" -> ";
-        printVector(f.begin(),f.end());
-        std::cout<<" -> "<<evaluate(f)<<std::endl<<std::endl;
-    }
+
     return 0;
 }

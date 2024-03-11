@@ -8,11 +8,13 @@
 			"args": [
 				"-g",
 				"-std=c++20",
-				"-I${workspaceFolder}\\include",
-                "-L${workspaceFolder}\\lib",
+				"-ID:\\Languiges_C++\\OpenGL\\incld\\include",
+                "-LD:\\Languiges_C++\\OpenGL\\incld\\lib",
 				"${workspaceFolder}\\src\\*.cpp",
-				"${workspaceFolder}\\src\\glad.c",
+				//"${workspaceFolder}\\src\\glad.c",
+				"D:\\Languiges_C++\\OpenGL\\incld\\glad.c",
                 "-lglfw3dll",
+                //"-l D:\\Languiges_C++\\OpenGL\\incld\\glfw3dll",
 				"-o",
 				"${workspaceFolder}\\qwerty.exe"
 			],

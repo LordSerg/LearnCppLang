@@ -13,8 +13,8 @@
 				"${workspaceFolder}\\src\\*.cpp",
 				//"${workspaceFolder}\\src\\glad.c",
 				"D:\\Languiges_C++\\OpenGL\\incld\\glad.c",
+                //"D:\\Languiges_C++\\OpenGL\\incld\\glfw3dll",
                 "-lglfw3dll",
-                //"-l D:\\Languiges_C++\\OpenGL\\incld\\glfw3dll",
 				"-o",
 				"${workspaceFolder}\\qwerty.exe"
 			],

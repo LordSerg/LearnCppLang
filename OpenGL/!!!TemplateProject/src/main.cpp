@@ -12,7 +12,6 @@ int main()
         std::cout << "Failed to initialize GLFW" << std::endl;
         return -1;
     }
-
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

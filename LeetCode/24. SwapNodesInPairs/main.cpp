@@ -21,19 +21,32 @@ ListNode* swapPairs(ListNode* head)
     if(a->next==nullptr)
         return head;
     b=a->next;
-
+    //swap values
     a->val+=b->val;
     b->val=a->val-b->val;
     a->val-=b->val;
 
     while(true)
     {
-
+        if(b->next!=nullptr)
+            a=b->next;
+        else
+            break;
+        if(a->next!=nullptr)
+            b=a->next;
+        else
+            break;
+        
+        a->val+=b->val;
+        b->val=a->val-b->val;
+        a->val-=b->val;
     }
+    return head;
 }
 
 int main()
 {
-
+    ListNode* list =new ListNode(1,new ListNode(2,new ListNode(3,new ListNode(4))));
+    
     return 0;
 }

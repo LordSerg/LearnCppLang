@@ -39,11 +39,35 @@ ListNode* reverseKGroup(ListNode* head, int k)
     {
         swp(a[i]->val,a[k-i-1]->val);
     }
+    bool flag=true;
+    while(true)
+    {
+        if(a[k-1]->next==nullptr)
+            break;
+        else
+            a[0] = a[k-1]->next;
+        for(int i{1};i<k;++i)
+        {
+            if(a[i-1]->next==nullptr)
+            {
+                flag=false;
+                break;
+            }
+            else
+                a[i]=a[i-1]->next;
+        }
+        if(!flag)
+            break;
+        for(int i{};i<k/2;++i)
+        {
+            swp(a[i]->val,a[k-i-1]->val);
+        }
+    }
+    return head;
 }
 
 int main()
 {
-    auto result = (10 <=> 20) > 0;
-    std::cout<< result;
+    
     return 0;
 }

@@ -15,9 +15,6 @@ int prod(std::vector<int>& v)
         p*=i;
     return p;
 }
-std::vector<std::vector<int>> findUniqueNumbers(int n)
-{
-}
 
 int main()
 {
@@ -93,20 +90,88 @@ int main()
 #endif
     int n{};
     std::cin>>n;
-    std::vector<int>a(n);
-    if(n==1)
-        a[0]==0;
-    else
+    std::vector<int>a(n,1);
+    std::vector<int>b(n,1);//copy
+    // if(n==1)
+    //     a[0]==0;
+    // else
+    // {
+    //     for(int i{};i<n-2;++i)
+    //         a[i]=1;
+    //     a[n-2]=2;
+    //     a[n-1]=n;
+    // }
+    // std::cout<<"min number is ";
+    // for(auto i:a)
+    //     std::cout<<i;
+    // std::cout<<std::endl;
+    std::vector<std::vector<int>>result;
+    for(int i{n-2},k{2},h{1};i>=0;--i)
     {
-        for(int i{};i<n-2;++i)
-            a[i]=1;
-        a[n-2]=2;
-        a[n-1]=n;
+        //k - is for digit num
+        //h - is for digit count
+        for(int j{};j<i;++j)
+        {
+            b[j]=1;
+        }
+        for(int j{i};j<n;++j)
+        {
+            b[j]=k;
+        }
+        int p{prod(b)};
+        int s{sum(b)};
+        int edgeIndex=n-h-1;//?n-k?
+        while(k<=9&&edgeIndex==n-h-1)
+        {
+            while(p>s&&k<=9)
+            {
+                k++;
+                for(int j{};j<i;++j)
+                {
+                    b[j]=1;
+                }
+                for(int j{i};j<n;++j)
+                {
+                    b[j]=k;
+                }
+                s=sum(b);
+                p=prod(b);
+            }
+            if(p==s)
+            {
+                result.push_back(b);
+                for(auto i:b)
+                    std::cout<<i;
+                std::cout<<std::endl;
+            }
+            b[n-1]++;
+            int index=n-1;
+
+            while (index>=0)
+            {
+                if(b[index]>9)
+                {
+                    ++k;
+                    b[index]=k;
+                    if(index-1>=0)
+                    {
+                        if(edgeIndex>index-1)
+                            edgeIndex==index-1;
+                        b[index-1]++;
+                    }
+                    else
+                        break;
+                }
+                index--;
+            }
+            
+            p=prod(b);
+            s=sum(b);
+        }
+        ++h;
+        k=2;
     }
-    std::cout<<"min number is ";
-    for(auto i:a)
-        std::cout<<i;
-    std::cout<<std::endl;
+
     //1) how to find other combinations
     //assume, that half of digits are ones:
     //N=10 ->

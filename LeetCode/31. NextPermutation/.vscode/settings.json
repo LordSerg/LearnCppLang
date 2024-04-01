@@ -32,7 +32,6 @@
         "ostream": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp",
-        "string": "cpp",
         "system_error": "cpp",
         "tuple": "cpp",
         "type_traits": "cpp",
@@ -51,10 +50,6 @@
         "xmemory": "cpp",
         "xstring": "cpp",
         "xtr1common": "cpp",
-        "xutility": "cpp",
-        "numeric": "cpp",
-        "list": "cpp",
-        "unordered_map": "cpp",
-        "xhash": "cpp"
+        "xutility": "cpp"
     }
 }

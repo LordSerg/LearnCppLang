@@ -12,6 +12,13 @@ int searchInsert(std::vector<int>& nums, int target)
     l=0;
     r=i-1;
     i/=2;
+    if(l==r)
+    {
+        if(target<=nums[i])
+            return 0;
+        else
+            return 1;
+    }
     while(l!=r)
     {
         if(r-l==1)
@@ -21,7 +28,7 @@ int searchInsert(std::vector<int>& nums, int target)
             else if(nums[l]==target)
                 return l;
             else if(nums[r]>target&&nums[l]>target)
-                return l-1;
+                return (l-1)<0?(0):(l-1);
             else if(nums[r]<target&&nums[l]<target)
                 return r+1;
             else //if(nums[r]<target&&nums[l]>target)

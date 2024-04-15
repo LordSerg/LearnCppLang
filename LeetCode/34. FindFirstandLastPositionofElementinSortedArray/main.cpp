@@ -54,7 +54,6 @@ std::vector<int> searchRange(std::vector<int>& nums, int target)
     }
     else
         return std::vector<int>{-1,-1};
-
 }
 int main()
 {
